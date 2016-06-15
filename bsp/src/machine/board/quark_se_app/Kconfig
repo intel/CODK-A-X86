@@ -1,0 +1,21 @@
+config BOARD_QUARK_SE_APP
+	bool "Quark_SE Platform (APP)"
+	# List all available hardware for this board
+	select QUARK_SE
+	select HAS_NORDIC
+	select HAS_SPI_FLASH if QUARK
+	select HAS_LED if QUARK
+	select HAS_HAPTIC if QUARK
+	# Select appropriate driver if a feature is activated
+	select SPI_FLASH_MX25U12835F if (SPI_FLASH && QUARK)
+	select SOC_LED if (LED && QUARK)
+	select DRV2605 if (HAPTIC && QUARK)
+
+if BOARD_QUARK_SE_APP
+
+# Set the default for this option, which is already defined in the Kconfig above
+config MACHINE_INCLUDE_PATH
+	string
+	default     "$(T)/arduino101_firmware/bsp/include/machine/board/quark_se_ctb/$(CONFIG_CORE_NAME)/"
+
+endif

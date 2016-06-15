@@ -1,0 +1,182 @@
+# Kconfig - ADC configuration options
+
+#
+#
+# Copyright (c) 2016, Intel Corporation
+# All rights reserved.
+# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+# 
+# 1. Redistributions of source code must retain the above copyright notice,
+# this list of conditions and the following disclaimer.
+# 
+# 2. Redistributions in binary form must reproduce the above copyright notice,
+# this list of conditions and the following disclaimer in the documentation
+# and/or other materials provided with the distribution.
+# 
+# 3. Neither the name of the copyright holder nor the names of its
+# contributors may be used to endorse or promote products derived from this
+# software without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+#
+#
+
+#
+# ADC options
+#
+menuconfig ADC
+	bool
+	prompt "ADC Driver"
+	default n
+	help
+	Enable the ADC driver for the platform
+
+config DW_ADC
+	bool "ARC Designware Driver"
+	depends on ADC && ARC
+	default n
+	help
+	Enable the driver implementation of the Designware ADC IP.
+
+choice
+	prompt "Input Mode"
+	depends on ADC
+	default ADC_SINGLE_ENDED
+	help
+	ADC input mode: single ended or differential.
+
+config ADC_SINGLE_ENDED
+	bool "Single ended"
+
+config ADC_DIFFERENTIAL
+	bool "Differential"
+
+endchoice
+
+config ADC_INPUT_MODE
+	int
+	depends on ADC
+	default 0 if ADC_SINGLE_ENDED
+	default 1 if ADC_DIFFERENTIAL
+
+choice
+	prompt "Output Mode"
+	depends on ADC
+	default ADC_SERIAL
+	help
+	ADC output mode: parallel or serial.
+
+config ADC_SERIAL
+	bool "Serial"
+
+config ADC_PARALLEL
+	bool "Parallel"
+
+endchoice
+
+config ADC_OUTPUT_MODE
+	int
+	depends on ADC
+	default 0 if ADC_SERIAL
+	default 1 if ADC_PARALLEL
+
+choice
+	prompt "Sequence Mode"
+	depends on ADC
+	default ADC_SINGLESHOT
+	help
+	ADC sequence mode - single run/repetitive
+
+config ADC_SINGLESHOT
+	bool "Single Ended"
+
+config ADC_REPETITIVE
+	bool "Differential"
+
+endchoice
+
+config ADC_SEQ_MODE
+	int
+	depends on ADC
+	default 0 if ADC_SINGLESHOT
+	default 1 if ADC_REPETITIVE
+
+choice
+	prompt "Capture Mode"
+	depends on ADC
+	default ADC_RISING_EDGE
+	help
+	ADC controller capture mode:
+	by rising or falling edge of adc_clk
+
+config ADC_RISING_EDGE
+	bool "Rising Edge"
+
+config ADC_FALLING_EDGE
+	bool "Falling Edge"
+
+endchoice
+
+config ADC_CAPTURE_MODE
+	int
+	depends on ADC
+	default 0 if ADC_RISING_EDGE
+	default 1 if ADC_FALLING_EDGE
+
+choice
+	prompt "Sample Width"
+	depends on ADC
+	default ADC_WIDTH_6_BIT
+	help
+	ADC sample width
+
+config ADC_WIDTH_6_BIT
+	bool "6 Bit Width"
+
+config ADC_WIDTH_8_BIT
+	bool "8 Bit Width"
+
+config ADC_WIDTH_10_BIT
+	bool "10 Bit Width"
+
+config ADC_WIDTH_12_BIT
+	bool "12 Bit Width"
+
+endchoice
+
+config ADC_WIDTH
+	int
+	depends on ADC
+	default 0 if ADC_WIDTH_6_BIT
+	default 1 if ADC_WIDTH_8_BIT
+	default 2 if ADC_WIDTH_10_BIT
+	default 3 if ADC_WIDTH_12_BIT
+
+config ADC_SERIAL_DELAY
+	int "Serial Delay"
+	depends on ADC
+	default 1
+	help
+	Number of ADC clock ticks that the first bit of
+	the serial output is delayed after the conversion
+	has started.
+
+config ADC_CLOCK_RATIO
+	int "Clock Ratio"
+	depends on ADC
+	default 1024
+	help
+	ADC Clock Ratio
+

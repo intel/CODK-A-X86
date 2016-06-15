@@ -1,0 +1,6 @@
+% Application       : SysKernel benchmark
+% Part common for all platforms
+
+% TASK NAME             PRIO ENTRY           STACK GROUPS
+% =======================================================
+  TASK SYSKERNELBENCH      6 SysKernelBench  16384 [FPU,EXE]

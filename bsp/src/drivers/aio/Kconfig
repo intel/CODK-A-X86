@@ -1,0 +1,12 @@
+config HAS_SOC_COMPARATOR
+	bool
+
+config SOC_COMPARATOR
+	bool "SOC Comparator driver"
+	depends on HAS_SOC_COMPARATOR
+	select DEVICE_FRAMEWORK
+
+config TCMD_COMPARATOR
+	bool "Comparator Test Command"
+	depends on TCMD
+	depends on SOC_COMPARATOR

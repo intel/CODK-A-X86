@@ -1,0 +1,55 @@
+config MACHINE_INCLUDE_PATH
+	string
+	help
+		The directory where the mandatory machine.h file for this machine is
+		located. It is automatically added to the include search path.
+
+# Board selection
+source "bsp/src/machine/board/Kconfig"
+
+# SoC features (can only be selected automatically by the board)
+source "bsp/src/machine/soc/quark_se/Kconfig"
+
+config HAS_ARC
+	bool
+
+config HAS_QUARK
+	bool
+
+config BLE_LPM
+	bool "Low Power Mode"
+
+config QEMU_X86
+	bool "Qemu X86"
+	depends on HAS_ARC || HAS_QUARK
+
+config HAS_NORDIC
+	bool
+	select HAS_IPC
+
+choice
+	prompt "Core"
+	depends on HAS_ARC || HAS_QUARK || HAS_NORDIC
+
+config ARC
+	bool "ARC"
+	depends on HAS_ARC
+
+config QUARK
+	bool "Quark"
+	depends on HAS_QUARK
+
+config NORDIC
+	bool "Nordic"
+	depends on HAS_NORDIC
+
+endchoice
+
+config CORE_NAME
+	string
+	default "arc" if ARC
+	default "quark" if QUARK
+	default "nordic" if NORDIC
+
+comment "Define a proper Board Configuration to enable the Core menu"
+	depends on !HAS_ARC && !HAS_QUARK && !HAS_NORDIC

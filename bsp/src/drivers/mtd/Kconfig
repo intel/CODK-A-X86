@@ -1,0 +1,43 @@
+config HAS_FLASH
+	bool
+
+config HAS_FLASH_SOC
+	bool
+	select HAS_FLASH
+
+config SOC_FLASH
+	bool "SOC Flash driver"
+	depends on HAS_FLASH_SOC
+
+config HAS_SPI_FLASH
+	bool
+	select HAS_FLASH
+
+config SPI_FLASH
+	bool
+
+config SPI_FLASH_INTEL_QRK
+	bool
+	depends on HAS_INTEL_QRK_SPI
+	select SBA
+	select INTEL_QRK_SPI
+	select DEVICE_FRAMEWORK
+	select WAKELOCK
+
+config SPI_FLASH_W25Q16DV
+	bool "SPI NOR Flash Winbond W25Q16DV on Intel QRK"
+	depends on HAS_SPI_FLASH
+	select SPI_FLASH_INTEL_QRK
+
+config SPI_FLASH_MX25U12835F
+	bool "SPI NOR Flash Macronix MX25U12835F on Intel QRK"
+	depends on HAS_SPI_FLASH
+	select SPI_FLASH_INTEL_QRK
+
+config HAS_ROM_SOC
+	bool
+
+config SOC_ROM
+	bool "SOC Rom driver"
+	depends on HAS_ROM_SOC
+	select WAKELOCK

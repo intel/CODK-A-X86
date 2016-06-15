@@ -1,0 +1,36 @@
+config BOARD_ARDUINO101
+	bool "Arduino101"
+	# This board contains the Curie Module
+	select QUARK_SE_CURIE
+	# It also has an SPI Flash
+	select HAS_SPI_FLASH
+	# Use the SPI Flash through the W25Q16DV driver
+	select SPI_FLASH_W25Q16DV if SPI_FLASH
+
+if BOARD_ARDUINO101
+
+# Here we set all flags that are common to all derivatives for this board
+
+# We use the same machine headers as the Curie Test Board
+config MACHINE_INCLUDE_PATH
+	string
+	default     "$(T)/arduino101_firmware/bsp/include/machine/board/quark_se_ctb/$(CONFIG_CORE_NAME)/"
+
+# Override the USB Product ID
+config USB_PRODUCT_ID
+	hex
+	default 0x0AB6
+
+config USB_VENDOR_ID
+	hex
+	default 0x8087
+
+config ARDUINO101_NO_DEBUG_PRINTS
+	bool "Disable debug prints on serial port on pins 0/1 of Arduino header"
+	default 1
+
+# Curie module is safe to stay on the external oscillator when USB is unplugged
+config QUARK_SE_SWITCH_INTERNAL_OSCILLATOR
+        bool
+        default n
+endif

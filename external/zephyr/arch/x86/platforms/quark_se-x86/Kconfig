@@ -1,0 +1,113 @@
+# Kconfig - Quark_SE configuration options
+
+#
+#
+# Copyright (c) 2016, Intel Corporation
+# All rights reserved.
+# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+# 
+# 1. Redistributions of source code must retain the above copyright notice,
+# this list of conditions and the following disclaimer.
+# 
+# 2. Redistributions in binary form must reproduce the above copyright notice,
+# this list of conditions and the following disclaimer in the documentation
+# and/or other materials provided with the distribution.
+# 
+# 3. Neither the name of the copyright holder nor the names of its
+# contributors may be used to endorse or promote products derived from this
+# software without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+#
+#
+#
+
+config PLATFORM
+        string
+        default quark_se-x86
+        help
+        This option holds the directory name used by sysgen to identify
+        the location of the config1p.vpf file and is used by the build system
+        to locate the correct linker file.
+
+choice
+        prompt "Board Type"
+        depends on PLATFORM_QUARK_SE_X86
+        default BOARD_CTB
+
+        config BOARD_CTB
+        bool "CTB - Curie Platform"
+
+        config BOARD_APP
+        bool "APP - Quark_SE Platform"
+
+        config BOARD_AAE
+        bool "AAE - Quark_SE Arduino101"
+endchoice
+
+config  LOAPIC_TIMER_FREQ
+        default 32000000
+
+config	SYS_CLOCK_HW_CYCLES_PER_SEC
+	default 32000000
+
+config  PHYS_LOAD_ADDR
+	default 0x40010000 if XIP
+	default 0xA8000000 if !XIP
+
+
+config PINMUX_BASE
+        default 0xB0800930
+	depends on PINMUX
+
+config PINMUX_NUM_PINS
+	default 69
+	depends on PINMUX
+
+config DW_AIO_COMPARATOR_BASE_ADDR
+	hex
+	depends on DW_AIO_COMPARATOR
+	default 0xb0800300
+
+config VERSION_HEADER
+	bool "Add version header"
+	default y
+	depends on PLATFORM_QUARK_SE_X86
+	help
+	Adds a version header
+
+
+
+config TEST_COMMAND
+	bool "Add test commands"
+	default y
+	depends on PLATFORM_QUARK_SE_X86
+	help
+	Adds a version header
+
+config ARC_INIT
+	bool "Quark_SE ARC Kickoff"
+	default n
+	help
+	Allows x86 processor to kickoff the ARC slave processor.
+
+config ARC_INIT_DEBUG
+	bool "Allows the usage of GDB with the ARC processor."
+	depends on ARC_INIT
+	default n
+	help
+	This option will stop the master processor from kicking-off
+	the ARC slave processor. This will allow GDB to halt an
+	engage the ARC processor.

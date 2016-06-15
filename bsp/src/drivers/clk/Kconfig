@@ -1,0 +1,2 @@
+config CLK_SYSTEM
+	bool

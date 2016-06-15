@@ -1,0 +1,28 @@
+menu "Operating System"
+
+choice
+	prompt "Operating System Abstraction"
+
+config OS_NONE
+	bool "None"
+
+config OS_LINUX
+	bool "Linux"
+	select LIST
+
+config OS_ZEPHYR
+	bool "Zephyr"
+	select LIST
+
+config OS_NORDIC
+	bool "Nordic"
+	select LIST
+
+endchoice
+
+config MEM_POOL_DEF_PATH
+	string "The path to the memory pool definitions"
+
+source "bsp/src/os/zephyr/Kconfig"
+
+endmenu

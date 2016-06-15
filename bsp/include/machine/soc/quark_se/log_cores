@@ -1,0 +1,4 @@
+/* DEFINE_LOGGER_CORE(<core id>, <core name>, <ipc_function>, <cpu_id>) */
+
+DEFINE_LOGGER_CORE(LOG_CORE_QRK, "QRK", NULL, CPU_ID_QRK)
+DEFINE_LOGGER_CORE(LOG_CORE_ARC, "ARC", ipc_request_sync_int, CPU_ID_ARC)

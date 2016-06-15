@@ -1,0 +1,21 @@
+config RTC
+	bool
+
+config HAS_INTEL_QRK_RTC
+	bool
+
+config HAS_INTEL_QRK_AON_PT
+	bool
+
+config INTEL_QRK_RTC
+	bool "Intel Quark RTC driver"
+	depends on HAS_INTEL_QRK_RTC
+	select RTC
+	select DEVICE_FRAMEWORK
+	select CLK_SYSTEM
+	select WAKELOCK
+
+config INTEL_QRK_AON_PT
+	bool "Intel Quark Always ON Periodic Timer (AONPT) driver"
+	depends on HAS_INTEL_QRK_AON_PT
+	select DEVICE_FRAMEWORK

@@ -1,0 +1,35 @@
+if OS_ZEPHYR
+
+menu "Zephyr OS"
+
+choice
+	prompt "Kernel"
+
+config OS_ZEPHYR_NANOKERNEL
+	bool "Nano"
+
+config OS_ZEPHYR_MICROKERNEL
+	bool "Micro"
+
+endchoice
+
+config OS_ZEPHYR_MDEF
+	string "Main application configuration file"
+	default "main.mdef"
+
+config ZEPHYR_CONF_FILE
+        string "Zephyr configuration file path"
+        default "prj-Intel.conf"
+
+config BALLOC_STATISTICS
+	bool "Collect balloc usage statistics"
+	help
+	Collect balloc usage statistics and add a test command to display them
+
+config BALLOC_STATISTICS_TRACK_OWNER
+	bool "Tracks memory block owners"
+	depends on BALLOC_STATISTICS
+
+endmenu
+
+endif

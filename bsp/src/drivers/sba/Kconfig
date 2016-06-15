@@ -1,0 +1,6 @@
+config SBA
+	bool
+	select DEVICE_FRAMEWORK
+	select CLK_SYSTEM
+	select WAKELOCK
+	select LIST

@@ -1,0 +1,10 @@
+obj-$(CONFIG_USB) += usb/
+obj-$(CONFIG_GPIO) += gpio/
+obj-$(CONFIG_SBA) += sba/
+obj-$(CONFIG_SPI) += spi/
+obj-$(CONFIG_RTC) += rtc/
+obj-$(CONFIG_PM) += pm/
+obj-y += aio/
+obj-y += ipc/
+obj-y += mtd/
+obj-$(CONFIG_CLK_SYSTEM) += clk/

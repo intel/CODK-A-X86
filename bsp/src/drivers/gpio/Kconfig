@@ -1,0 +1,47 @@
+config GPIO
+	bool
+
+config HAS_GPIO
+	bool
+
+config SOC_GPIO
+	bool "SOC GPIO Driver"
+	depends on HAS_GPIO_SOC
+	select GPIO
+	select DEVICE_FRAMEWORK
+
+config HAS_GPIO_SOC
+	bool
+	select HAS_GPIO
+
+config HAS_GPIO_SOC_32
+	bool
+	select HAS_GPIO_SOC
+
+config HAS_GPIO_SOC_AON
+	bool
+	select HAS_GPIO_SOC
+
+if SOC_GPIO
+
+menu "SOC GPIO active banks"
+
+config SOC_GPIO_32
+	bool "GPIO 32"
+	depends on HAS_GPIO_SOC_32
+
+config SOC_GPIO_AON
+	bool "GPIO AON"
+	depends on HAS_GPIO_SOC_AON
+
+endmenu
+
+endif
+
+config HAS_GPIO_SS
+	bool
+	select HAS_GPIO
+
+config SS_GPIO
+	bool "GPIO SS driver"
+	depends on HAS_GPIO_SS

@@ -1,0 +1,9 @@
+choice
+	prompt "Board"
+
+source "bsp/src/machine/board/quark_se_ctb/Kconfig"
+source "bsp/src/machine/board/quark_se_app/Kconfig"
+
+-source "$PROJECT_PATH/boards.Kconfig"
+
+endchoice

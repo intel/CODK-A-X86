@@ -1,0 +1,10 @@
+obj-$(CONFIG_QUARK_SE_QUARK_INT_STUBS) += int_stubs.o
+obj-$(CONFIG_QUARK_SE_PANIC_DEFAULT) += panic_stubs.o panic.o reboot.o
+obj-$(CONFIG_QUARK_SE_QUARK_SOC_SETUP) += soc_setup.o
+obj-$(CONFIG_DEEPSLEEP) += low_power.o
+obj-$(CONFIG_QUARK_SE_QUARK_DEEPSLEEP_WHEN_IDLE) += deep_sleep_idle.o
+obj-$(CONFIG_LOG_BACKEND_USB) += log_backend_usb.o
+obj-$(CONFIG_QUARK_SE_QUARK_LOG_BACKEND_UART) += log_backend_uart.o
+obj-$(CONFIG_TCMD) += uart_tcmd_client.o
+obj-$(CONFIG_QUARK_SE_QUARK_SOC_CONFIG) += soc_config.o
+obj-$(CONFIG_IPC_UART) += nordic_interface.o

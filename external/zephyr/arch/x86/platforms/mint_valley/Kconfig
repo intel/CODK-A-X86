@@ -1,0 +1,65 @@
+#
+#
+# Copyright (c) 2016, Intel Corporation
+# All rights reserved.
+# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+# 
+# 1. Redistributions of source code must retain the above copyright notice,
+# this list of conditions and the following disclaimer.
+# 
+# 2. Redistributions in binary form must reproduce the above copyright notice,
+# this list of conditions and the following disclaimer in the documentation
+# and/or other materials provided with the distribution.
+# 
+# 3. Neither the name of the copyright holder nor the names of its
+# contributors may be used to endorse or promote products derived from this
+# software without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+#
+#
+#
+
+
+config PLATFORM
+	string
+	default mint_valley
+	help
+	This option holds the directory name used by sysgen to identify
+	the location of the config1p.vpf file and is used by the build system
+	to locate the correct linker file.
+
+config  LOAPIC_TIMER_FREQ
+	default 32000000
+
+config  SYS_CLOCK_HW_CYCLES_PER_SEC
+	default 32000000
+
+config  PHYS_LOAD_ADDR
+	default 0x00180000 if XIP
+	default 0x00280000 if !XIP
+
+
+config PHYS_SRAM_ADDR
+	hex "Physical SRAM address"
+	default 0x00280000
+	help
+	This option specifies the physical SRAM address of this Soc.
+
+config MVIC_LOAPIC_TIMER_VEC
+	hex "Vector for MVIC LVT Timer."
+	help
+	Mint Valley Interrupt Controller (MVIC) LVT Timer vector.
+

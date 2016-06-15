@@ -1,0 +1,58 @@
+config PM
+	bool
+
+config HAS_USB_PM
+	bool
+
+config WAKELOCK
+	bool "Wakelock engine"
+	help
+		Generic Wakelock implementation for device drivers
+
+config USB_PM
+	bool "USB cable detection driver"
+	depends on HAS_USB_PM
+	depends on SOC_GPIO_AON || SOC_COMPARATOR
+	select LIST
+
+config USB_PM_SUSPEND_BLOCKERS
+	bool "USB cable detection suspend blocker"
+	default y
+	depends on USB_PM
+	help
+		Prevent deepsleep mode if USB cable is plugged.
+
+config NORDIC_SUSPEND_BLOCKER_PM
+	bool "Nordic suspend blocker driver"
+	depends on HAS_NORDIC
+	depends on PM
+	depends on SOC_GPIO_AON
+
+config HAS_PM_PUPDR
+	bool
+
+config PM_PUPDR
+	bool "Power-Up Power-Down driver"
+	depends on HAS_PM_PUPDR
+	select DEVICE_FRAMEWORK
+	select INTEL_QRK_RTC if HAS_INTEL_QRK_RTC
+	select WAKELOCK
+	select LIST
+
+config HAS_BOARD_SHUTDOWN
+	bool
+
+config BOARD_SHUTDOWN
+	bool "Call board specific shutdown"
+	depends on HAS_BOARD_SHUTDOWN
+	depends on PM_PUPDR
+	default y
+
+config DEEPSLEEP
+	bool "Allow deep sleep in selected SoC."
+	depends on PM_PUPDR
+
+config DEEPSLEEP_WHEN_IDLE
+	bool "Attempt to enter deep sleep when cpu is in idle task"
+	default n
+	depends on DEEPSLEEP

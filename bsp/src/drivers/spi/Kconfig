@@ -1,0 +1,22 @@
+config SPI
+	bool
+
+config HAS_INTEL_QRK_SPI
+	bool
+
+config INTEL_QRK_SPI
+	bool "Intel Quark SPI driver"
+	depends on HAS_INTEL_QRK_SPI
+	select SPI
+	select SBA if TCMD
+	select CLK_SYSTEM
+
+config HAS_SS_SPI
+	bool
+
+config SS_SPI
+	bool "SS SPI driver"
+	depends on HAS_SS_SPI
+	select SPI
+	select SBA if TCMD
+	select CLK_SYSTEM

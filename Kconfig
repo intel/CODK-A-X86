@@ -1,0 +1,47 @@
+mainmenu "Arduino101_Firmware build configuration"
+
+config PROJECT_PATH
+	string
+	option env="PROJECT_PATH"
+
+source "bsp/Kconfig"
+
+source "framework/Kconfig"
+
+menu "Services"
+
+source "framework/src/services/Kconfig"
+-source "$PROJECT_PATH/services.Kconfig"
+
+endmenu
+
+menu "Test"
+
+config OS_UNIT_TESTS
+	bool "OS Unit Tests"
+	help
+		Caution when selecting this option, as it will dramatically
+		increase the output binary size.
+
+config QUARK_DRIVER_TESTS
+	bool "Quark driver tests"
+
+config ARC_DRIVER_TESTS
+	bool "Arc driver tests"
+
+config ARC_OS_UNIT_TESTS
+	bool "Arc OS unit tests"
+
+config GPIO_DRIVER_TESTS
+	depends on GPIO
+	depends on QUARK_DRIVER_TESTS || ARC_DRIVER_TESTS
+	default y
+	bool "GPIO driver tests"
+
+
+endmenu
+
+config EXTERNAL_DIRECTORIES
+	string "Directories to include in the build"
+
+-source "$PROJECT_PATH/project.Kconfig"

@@ -1,0 +1,14 @@
+menuconfig CFW
+	bool "Component Framework for services"
+	select PORT
+	select IPC if HAS_IPC
+	select PANIC
+	select CFW_CLIENT
+	select CFW_SERVICE
+
+if CFW
+
+source "framework/src/cfw/Kconfig"
+
+
+endif

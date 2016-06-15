@@ -1,0 +1,159 @@
+# networking.kconf - Generic networking configuration options
+
+#
+#
+# Copyright (c) 2016, Intel Corporation
+# All rights reserved.
+# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+# 
+# 1. Redistributions of source code must retain the above copyright notice,
+# this list of conditions and the following disclaimer.
+# 
+# 2. Redistributions in binary form must reproduce the above copyright notice,
+# this list of conditions and the following disclaimer in the documentation
+# and/or other materials provided with the distribution.
+# 
+# 3. Neither the name of the copyright holder nor the names of its
+# contributors may be used to endorse or promote products derived from this
+# software without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+#
+#
+
+#
+# Networking options
+#
+
+config	NETWORKING
+	bool
+	prompt "Generic networkig support [EXPERIMENTAL]"
+	default n
+	help
+	  This option enabled generic networking support.
+
+choice
+prompt "Internet Protocol version"
+depends on NETWORKING
+help
+	The IP stack can either support IPv6 or IPv4 but
+	not both at the same time. The IPv6 support should
+	be selected by default as there is limited set of
+	network bearers provided that support IPv4.
+default NETWORKING_WITH_IPV6
+config NETWORKING_WITH_IPV6
+	bool "IPv6"
+	help
+	  Choose this if unsure.
+config NETWORKING_WITH_IPV4
+	bool "IPv4"
+	help
+	  Legacy IP.
+endchoice
+
+config	NETWORKING_WITH_RPL
+	bool
+	prompt "Enable RPL (ripple) IPv6 mesh routing protocol"
+	depends on NETWORKING && NETWORKING_WITH_IPV6
+	default n
+	help
+	  Enable RPL (RFC 6550) IPv6 Routing Protocol for
+	  Low-Power and Lossy Networks.
+
+config	NETWORKING_WITH_LOGGING
+	bool
+	prompt "Enable logging of the uIP stack"
+	depends on NETWORKING
+	default n
+	help
+	  Enable packet and uIP stack logging
+
+config	NETWORKING_WITH_LOOPBACK
+	bool
+	prompt "Enable loopback driver"
+	depends on NETWORKING
+	default n
+	help
+	  Enable a simple loopback driver that installs
+	  IPv6 loopback addresses into routing table and
+	  neighbor cache. All packets transmitted are
+	  looped back to the receiving fifo/fiber.
+
+config	NETWORKING_UART
+	bool
+	prompt "Network UART/slip driver"
+	depends on NETWORKING
+	select UART_SIMPLE
+	default n
+	help
+	  Enable UART driver for passing IPv6 packets using slip.
+	  This requires running tunslip6 tool in host. See README
+	  file at net/ip/contiki/tools directory for details.
+
+config	NETWORKING_DEBUG_UART
+	bool
+	prompt "Network UART driver debug"
+	depends on NETWORKING_UART && NETWORKING_WITH_LOGGING
+	default n
+	help
+	  This option enables debug support for network UART
+	  driver.
+
+config	NETWORKING_WITH_15_4
+	bool
+	prompt "Enable 802.15.4 driver"
+	depends on NETWORKING && NETWORKING_WITH_IPV6
+	default n
+	help
+	  Enable 802.15.4 driver that receives the IPv6 packet,
+	  does header compression on it and writes it to the
+	  802.15.4 stack Tx FIFO. The 802.15.4 Tx fiber will pick up
+	  the header compressed IPv6 6lowpan packet and fragment
+	  it into suitable chunks ready to be sent to the 802.15.4
+	  hw driver
+
+choice
+prompt "802.15.4 Radio Driver"
+depends on NETWORKING && NETWORKING_WITH_15_4
+default n
+help
+       The 802.15.4 layer can either support loopback within
+       or loopback with uart but not both at the same time.
+config	NETWORKING_WITH_15_4_LOOPBACK
+	bool
+	prompt "Enable 802.15.4 loopback radio driver"
+	help
+	  Enable 802.15.4 loopback radio driver that receives
+	  the 802.15.4 frame and put it back 802.15.4 Rx Fifo.
+
+config NETWORKING_WITH_15_4_LOOPBACK_UART
+       bool
+       prompt "Enable 802.15.4 loopback radio uart driver"
+       select UART_SIMPLE
+       help
+         Enable 802.15.4 loopback radio driver that sends
+         802.15.4 frames out of qemu through uart and receive
+         frames through uart. This way one can test 802.15.4 frames
+         between two qemus
+endchoice
+
+config	NETWORKING_WITH_6LOWPAN
+	bool
+	prompt "Enable 6LoWPAN (IPv6 compression) in the uIP stack"
+	depends on NETWORKING
+	depends on NETWORKING_WITH_15_4
+	default n
+	help
+	  Enable 6LoWPAN in uIP stack

@@ -1,0 +1,14 @@
+menu "Utility libraries"
+
+config WORKQUEUE
+	bool "An OS agnostic workqueue implementation"
+	select LOG
+
+config CUNIT_TESTS
+	bool "Unit Tests Utils"
+	select LOG
+
+config LIST
+	bool "Generic list handler"
+
+endmenu

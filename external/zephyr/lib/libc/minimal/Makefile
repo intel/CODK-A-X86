@@ -1,0 +1,10 @@
+lib-y := source/stdout/fprintf.o
+lib-y += source/stdout/prf.o
+lib-y += source/stdout/sprintf.o
+lib-y += source/stdout/stdout_console.o
+lib-y += source/string/string.o
+lib-y += source/stdlib/strtol.o
+lib-y += source/stdlib/strtoul.o
+lib-y += source/stdlib/atoi.o
+lib-y += source/string/strncasecmp.o
+lib-y += source/string/errno.o

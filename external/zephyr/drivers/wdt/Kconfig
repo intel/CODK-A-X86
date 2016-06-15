@@ -1,0 +1,6 @@
+
+config DW_WDT
+	bool "Enable DesignWare Watchdog"
+	default n
+	help
+	Enable watchdog timer.

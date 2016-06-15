@@ -1,0 +1,15 @@
+obj-$(CONFIG_IPC) += ipc_callback.o
+obj-$(CONFIG_PANIC) += panic.o
+obj-$(CONFIG_LOG_CBUFFER) += log_impl_cbuffer.o
+obj-$(CONFIG_LOG_PRINTK)  += log_impl_printk.o
+obj-$(CONFIG_LOG_PRINTF)  += log_impl_printf.o
+obj-$(CONFIG_TCMD) += tcmd/
+obj-$(CONFIG_TCMD) += log_tcmd.o
+obj-$(CONFIG_TCMD) += panic_tcmd.o
+obj-$(CONFIG_FACTORY_DATA) += factory_data.o
+obj-$(CONFIG_LOG) += log.o
+obj-$(CONFIG_LOG) += log_impl.o
+obj-$(CONFIG_VERSION) += version.o
+obj-$(CONFIG_PORT) += port.o
+obj-$(CONFIG_CBUFFER_STORAGE)  += cbuffer_storage.o
+obj-$(CONFIG_CBUFFER_STORAGE)  += cbuffer_storage_impl.o

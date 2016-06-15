@@ -1,0 +1,17 @@
+config BOARD_QUARK_SE_CTB
+	bool "Curie Test Board (CTB)"
+	select QUARK_SE_CURIE
+
+if BOARD_QUARK_SE_CTB
+
+# Set the default for this option, which is already defined in the Kconfig above
+config MACHINE_INCLUDE_PATH
+	string
+	default     "$(T)/arduino101_firmware/bsp/include/machine/board/quark_se_ctb/$(CONFIG_CORE_NAME)/"
+
+# internal regulators are used in ctb board
+config QUARK_SE_DISABLE_INTERNAL_VREG
+	bool
+	default n
+
+endif

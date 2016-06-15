@@ -1,0 +1,9 @@
+config PWRBTN
+	bool
+
+config HAS_PWRBTN
+	bool "Power Button"
+
+config PWRBTN_GPIO
+	bool "Power button GPIO module"
+	select SERVICES_QRK_SE_GPIO

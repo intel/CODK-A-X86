@@ -1,0 +1,35 @@
+choice
+	prompt "Master/Proxy"
+	depends on CFW
+
+config CFW_MASTER
+	bool "Master"
+	select LIST
+	select PORT_IS_MASTER
+	help
+	The Master Framework node is in charge of dispatching service requests and
+	responses.
+
+config CFW_PROXY
+	bool "Proxy"
+	select LIST
+	help
+	A Proxy node registers its services to the Master node and honours requests
+	received from the Master.
+
+endchoice
+
+
+config CFW_CLIENT
+	bool "Client api"
+	help
+	Component framework client interface. This allows to create component
+	framework clients.
+
+config CFW_SERVICE
+	bool "Service api"
+	select LIST
+	help
+	Component framework service interface. This allows to create component
+	framework services.
+

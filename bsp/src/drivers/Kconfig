@@ -1,0 +1,20 @@
+menu "Drivers"
+
+config DEVICE_FRAMEWORK
+	bool
+	select PM #FIXME
+
+source "bsp/src/drivers/aio/Kconfig"
+source "bsp/src/drivers/gpio/Kconfig"
+
+source "bsp/src/drivers/mtd/Kconfig"
+source "bsp/src/drivers/pm/Kconfig"
+source "bsp/src/drivers/rtc/Kconfig"
+source "bsp/src/drivers/sba/Kconfig"
+source "bsp/src/drivers/spi/Kconfig"
+source "bsp/src/drivers/usb/Kconfig"
+source "bsp/src/drivers/pwrbtn/Kconfig"
+source "bsp/src/drivers/clk/Kconfig"
+-source "$PROJECT_PATH/drivers.Kconfig"
+
+endmenu

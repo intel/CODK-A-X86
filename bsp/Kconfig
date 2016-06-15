@@ -1,0 +1,5 @@
+source "bsp/src/machine/Kconfig"
+source "bsp/src/os/Kconfig"
+source "bsp/src/infra/Kconfig"
+source "bsp/src/util/Kconfig"
+source "bsp/src/drivers/Kconfig"

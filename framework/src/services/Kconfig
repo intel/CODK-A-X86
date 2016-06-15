@@ -1,0 +1,148 @@
+
+
+menu "Analog Digital Converter"
+
+config SERVICES_QRK_SE_ADC
+	bool "Client"
+	select CFW
+
+config SERVICES_QRK_SE_ADC_IMPL
+	bool "Server"
+	depends on HAS_SS_ADC
+	select CFW
+	select SS_ADC
+
+endmenu
+
+menu "GPIO"
+
+config SERVICES_QRK_SE_GPIO
+	bool "Quark_SE GPIO service client"
+	select CFW
+
+config SERVICES_QRK_SE_GPIO_IMPL
+	bool "Quark_SE GPIO service server"
+	depends on HAS_GPIO
+	select CFW
+	select SOC_GPIO if HAS_GPIO_SOC
+	select SS_GPIO if HAS_GPIO_SS
+
+endmenu
+
+menu "Sensors"
+
+config SERVICES_SENSOR
+	bool "Client"
+	select CFW
+
+config SERVICES_SENSOR_IMPL
+	bool "Server"
+	depends on HAS_BMI160
+	select CFW
+	select BMI160
+	select SENSOR_CORE
+
+config SERVICES_SENSOR_PROXY
+	bool "Client Proxy"
+
+config SENSOR_CORE
+	bool
+
+if SENSOR_CORE
+
+menu "Sensor Core"
+
+choice
+	prompt "Implementation"
+
+config OPEN_CORE
+	bool "Open"
+	select SENSOR_CORE_ALGO
+
+config PSH_CORE
+	bool "PSH"
+	select SENSOR_CORE_ALGO
+
+
+endchoice
+
+config SENSOR_CORE_ALGO
+	bool
+
+if SENSOR_CORE_ALGO
+
+menu "Algorithms"
+
+config SENSOR_CORE_ALGO_COMMON
+	bool
+
+config SENSOR_CORE_ALGO_UDG
+	bool "User Defined Gesture"
+	depends on HAS_PVP
+	select SENSOR_CORE_ALGO_COMMON
+	select PVP_DRV
+
+config SENSOR_CORE_ALGO_TAPPING
+	bool "Tapping"
+	select SENSOR_CORE_ALGO_COMMON
+
+config SENSOR_CORE_ALGO_SIMPLEGES
+	bool "Simple Gesture"
+	select SENSOR_CORE_ALGO_COMMON
+
+config SENSOR_CORE_ALGO_STEPCOUNTER_ACTIVITY
+	bool "Step counter and Activity classification"
+	select SENSOR_CORE_ALGO_COMMON
+
+config SENSOR_CORE_ALGO_BIKE
+    bool "Biking"
+    depends on SENSOR_CORE_ALGO_STEPCOUNTER_ACTIVITY
+    select SENSOR_CORE_ALGO_COMMON
+
+config SENSOR_CORE_ALGO_DEMO
+	bool "Algo Demo"
+	select SENSOR_CORE_ALGO_COMMON
+endmenu
+
+endif
+
+endmenu
+
+endif
+
+endmenu
+
+
+
+
+if QUARK_SE_QUARK
+
+menu "Storage"
+
+config SERVICES_QRK_SE_STORAGE
+	bool "Client"
+	select CFW
+
+config SERVICES_QRK_SE_STORAGE_IMPL
+	bool "Server"
+	depends on HAS_FLASH
+	select CFW
+	select SOC_FLASH if HAS_FLASH_SOC
+	select SPI_FLASH if HAS_SPI_FLASH
+
+endmenu
+
+menu "Properties"
+
+config SERVICES_QRK_SE_PROPERTIES
+	bool "Client"
+	select CFW
+
+config SERVICES_QRK_SE_PROPERTIES_IMPL
+	bool "Server"
+	select CFW
+	select SERVICES_QRK_SE_STORAGE
+
+endmenu
+
+endif

@@ -1,0 +1,86 @@
+MCA: delete all remaining traces of microchannel bus support.
+scripts/config: properly report and set string options
+kbuild: all{no,yes,mod,def,rand}config only read files when instructed to.
+kconfig: Add error handling to KCONFIG_ALLCONFIG
+nconf: add u, d command keys in scroll windows
+menuconfig: add u, d, q command keys in text boxes
+scripts/config: fix double-quotes un-escaping
+kconfig: allow long lines in config file
+kconfig/nconf: fix compile with ncurses reentrant API
+scripts/config: add option to undef a symbol
+scripts/config: allow alternate prefix to config option symbol
+scripts/config: add option to not upper-case symbols
+kconfig: replace 'oldnoconfig' with 'olddefconfig', and keep the old name as an alias
+menuconfig: Assign jump keys per-page instead of globally
+menuconfig: Do not open code textbox scroll up/down
+menuconfig: Add jump keys to search results
+menuconfig: Extend dialog_textbox so that it can return to a scrolled position
+menuconfig: Extend dialog_textbox so that it can exit on arbitrary keypresses
+menuconfig: Remove superfluous conditionnal
+kconfig: document oldnoconfig to what it really does in conf.c
+kconfig/mconf.c: revision of curses initialization.
+menuconfig: Replace CIRCLEQ by list_head-style lists.
+scripts/config: Fix wrong "shift" for --keep-case
+kbuild: Fix missing '\n' for NEW symbols in yes "" | make oldconfig >conf.new
+kconfig: nconf: rewrite labels of function keys line
+kconfig: nconf: rewrite help texts
+kconfig: fix a compiliation error when using make xconfig
+nconf: function keys line, change background color for better readability
+menuconfig: Get rid of the top-level entries for "Load an Alternate/Save an Alternate"
+menuconfig: Add Save/Load buttons
+kconfig:lxdialog: remove duplicate code
+menuconfig:inputbox: support navigate input position
+kconfig: document use of CONFIG_ environment variable
+merge_config.sh: Add option to specify output dir
+Revert "kconfig-language: add to hints"
+kconfig: Fix malloc handling in conf tools
+kconfig: get CONFIG_ prefix from the environment
+kconfig: add a function to get the CONFIG_ prefix
+kconfig: remove CONFIG_ from string constants
+menuconfig: fix NULL pointer dereference when searching a symbol
+menuconfig: print more info for symbol without prompts
+kconfig: fix lists definition for C++
+Revert "kconfig: fix randomising choice entries in presence of KCONFIG_ALLCONFIG"
+kconfig: implement KCONFIG_PROBABILITY for randconfig
+kconfig: allow specifying the seed for randconfig
+kconfig: fix randomising choice entries in presence of KCONFIG_ALLCONFIG
+kconfig: do not override symbols already set
+kconfig: fix randconfig tristate detection
+menuconfig: Add "breadcrumbs" navigation aid
+menuconfig: Fix memory leak introduced by jump keys feature
+merge_config.sh: Avoid creating unnessary source softlinks
+57a9c76 scripts/config: fix assignment of parameters for short version of --*-after options
+063f466 mconf: handle keys in empty dialogs
+e983b7b kconfig/menu.c: fix multiple references to expressions in menu_add_prop()
+40b3136 Finally eradicate CONFIG_HOTPLUG
+fbe98bb kconfig: Fix defconfig when one choice menu selects options that another choice menu depends on
+851f665 kconfig/lxdialog: Add definitions for mininimum (re)size values
+ff7b0c2 kconfig/lxdialog: Use new mininimum resize definitions in conf_choice()
+1376391 kconfig/lxdialog: handle newline characters in print_autowrap()
+4f2de3e mconf: use function calls instead of ncurses' variables LINES and COLS
+e0b4260 nconf: use function calls instead of ncurses' variables LINES and COLS
+1278ebd mconf/nconf: mark empty menus/menuconfigs different from non-empty ones
+7387778 scripts/config: replace hard-coded script name by a dynamic value
+e6abf12 kconfig/conf: fix randconfig setting multiple symbols in a choice
+e85ac12 kconfig/conf: accept a base-16 seed for randconfig
+a5f6d79 kconfig/conf: print the seed used to initialise the RNG for randconfig
+193b40a kconfig: sort found symbols by relevance
+a1ce636 kconfig/[mn]conf: make it explicit in the search box that a regexp is possible
+3b9a19e kconfig: loop as long as we changed some symbols in randconfig
+8357b48 kconfig: fix randomising choice entries in presence of KCONFIG_ALLCONFIG
+490f161 Revert "kconfig: fix randomising choice entries in presence of KCONFIG_ALLCONFIG"
+b57caaa kconfig: allow "hex" and "range" to support longs
+9e554dd Documentation/kconfig: more concise and straightforward search explanation
+26e933e kconfig: avoid multiple calls to strlen
+f6eb6e4 kconfig/[mn]conf: shorten title in search-box
+803b351 kconfig: minor style fixes in symbol-search code
+1407f97 kconfig: don't allocate n+1 elements in temporary array
+508382a kconfig: simplify symbol-search code
+129784a kconfig: switch to "long long" for sanity
+83e8b90 scripts/config: use sed's POSIX interface
+04b19b7 kconfig: silence warning when parsing auto.conf when a symbol has changed type
+6bf2e84 diffconfig: Gracefully exit if the default config files are not present
+c8272fa diffconfig: Update script to support python versions 2.5 through 3.3
+6902dcc kconfig: do not special-case 'MODULES' symbol
+e062781 kconfig: do not allow more than one symbol to have 'option modules'
+86eb781 scripts/config: fix variable substitution command

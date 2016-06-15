@@ -1,0 +1,5 @@
+% Application       : test XIP
+
+% TASK NAME       PRIO ENTRY               STACK GROUPS
+% =====================================================
+  TASK tStartTask    5 RegressionTaskEntry  1024 [EXE]

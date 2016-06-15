@@ -1,0 +1,144 @@
+#
+# Automatically generated file; DO NOT EDIT.
+# Zephyr Kernel/arm Configuration
+#
+CONFIG_NANOKERNEL=y
+# CONFIG_MICROKERNEL is not set
+
+#
+# General Kernel Options
+#
+CONFIG_SYS_CLOCK_TICKS_PER_SEC=100
+CONFIG_SYS_CLOCK_HW_CYCLES_PER_SEC=25000000
+CONFIG_SYS_CLOCK_EXISTS=y
+# CONFIG_INIT_STACKS is not set
+CONFIG_XIP=y
+# CONFIG_ENHANCED_SECURITY is not set
+
+#
+# Nanokernel Options
+#
+# CONFIG_BOOT_BANNER is not set
+CONFIG_MAIN_STACK_SIZE=1024
+CONFIG_ISR_STACK_SIZE=2048
+# CONFIG_CONTEXT_CUSTOM_DATA is not set
+# CONFIG_NANO_TIMEOUTS is not set
+CONFIG_NANO_TIMERS=y
+
+#
+# General Setup
+#
+# CONFIG_EXPERIMENTAL is not set
+CONFIG_CROSS_COMPILE=""
+
+#
+# Compile and Link Features
+#
+CONFIG_KERNEL_BIN_NAME="nanokernel"
+CONFIG_COMPILER_OPT=""
+CONFIG_MINIMAL_LIBC=y
+
+#
+# Debugging Options
+#
+CONFIG_PRINTK=y
+# CONFIG_STDOUT_CONSOLE is not set
+# CONFIG_ASSERT is not set
+
+#
+# Bootloader Options
+#
+# CONFIG_BOOTLOADER_UNKNOWN is not set
+
+#
+# ARM family options
+#
+CONFIG_ARM=y
+CONFIG_ISA_THUMB2=y
+
+#
+# Platform General Configuration
+#
+CONFIG_PLATFORM_FSL_FRDM_K64F=y
+# CONFIG_PLATFORM_TI_LM3S6965 is not set
+
+#
+# ARM Cortex CPU options
+#
+CONFIG_CPU_CORTEX=y
+CONFIG_CPU_CORTEX_M=y
+CONFIG_CPU_CORTEX_M3_M4=y
+# CONFIG_CPU_CORTEX_M3 is not set
+CONFIG_CPU_CORTEX_M4=y
+
+#
+# ARM Cortex-M family options
+#
+CONFIG_LDREX_STREX_AVAILABLE=y
+CONFIG_DATA_ENDIANNESS_LITTLE=y
+CONFIG_STACK_ALIGN_DOUBLE_WORD=y
+CONFIG_STACK_GROWS_DOWN=y
+CONFIG_NUM_IRQ_PRIO_BITS=4
+# CONFIG_RUNTIME_NMI is not set
+CONFIG_FAULT_DUMP=2
+
+#
+# ARM Cortex-M3/M4 options
+#
+CONFIG_SW_ISR_TABLE=y
+CONFIG_SW_ISR_TABLE_DYNAMIC=y
+CONFIG_SW_ISR_TABLE_BSP=y
+CONFIG_IRQ_VECTOR_TABLE_BSP=y
+# CONFIG_ZERO_LATENCY_IRQS is not set
+CONFIG_ARCH_HAS_TASK_ABORT=y
+CONFIG_ARCH_HAS_NANO_FIBER_ABORT=y
+CONFIG_PLATFORM="fsl_frdm_k64f"
+CONFIG_NUM_IRQS=34
+CONFIG_WDOG_INIT=y
+
+#
+# Device Drivers
+#
+# CONFIG_UART_SIMPLE is not set
+# CONFIG_CONSOLE_HANDLER is not set
+CONFIG_UART_CONSOLE_INDEX=0
+
+#
+# Serial Drivers
+#
+# CONFIG_NS16550 is not set
+CONFIG_K20_UART=y
+# CONFIG_STELLARIS_UART is not set
+# CONFIG_UART_INTERRUPT_DRIVEN is not set
+# CONFIG_GPIO is not set
+
+#
+# Interrupt Controllers
+#
+
+#
+# Timer Drivers
+#
+CONFIG_CORTEX_M_TIMER=y
+
+#
+# Random Generation Configuration
+#
+# CONFIG_RANDOM_GENERATOR is not set
+# CONFIG_TEST_RANDOM_GENERATOR is not set
+
+#
+# Pinmux Configuration
+#
+# CONFIG_PINMUX is not set
+# CONFIG_DW_RTC is not set
+# CONFIG_DW_WDT is not set
+# CONFIG_AIO_COMPARATOR is not set
+# CONFIG_ADC is not set
+
+#
+# Networking
+#
+# CONFIG_BLUETOOTH is not set
+# CONFIG_NETWORKING is not set
+CONFIG_DEFCONFIG_LIST="$ARCH_DEFCONFIG"

@@ -1,0 +1,5 @@
+% Application       : bootTime
+
+% TASK NAME         PRIO ENTRY           STACK GROUPS
+% ===================================================
+  TASK BOOTTIME        5 bootTimeTask     1024  [EXE]

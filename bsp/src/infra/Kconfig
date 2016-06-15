@@ -1,0 +1,134 @@
+menu "Infra"
+
+config IPC
+	bool
+
+config HAS_SHARED_MEM
+        bool
+
+config HAS_IPC
+	bool
+
+menuconfig PORT
+	bool "Port based communications"
+	select LOG
+	select LIST
+	help
+	Asynchronous messaging mechanism based on queues.
+
+config PORT_MULTI_CPU_SUPPORT
+	bool "Support communications between multiple CPUs"
+	default y
+	depends on PORT
+	depends on HAS_IPC
+	select IPC if HAS_IPC
+	help
+	Allow messages to be exchanged between cores.
+
+config PORT_IS_MASTER
+    bool "Act as the master for port communications"
+    depends on PORT
+
+config PANIC
+	bool "Panic handling"
+
+config PANIC_ON_BUS_ERROR
+	bool "Panic on bus error"
+	depends on PANIC
+	help
+	Panic when a bus error is catched on the bus
+
+config PANIC_DUMP_ON_REBOOT
+	bool "Panic dump copy to NVM after reboot"
+	depends on PANIC
+	depends on NORDIC
+	help
+	Copy panic dump from RAM to NVM just after master core reset
+
+menuconfig LOG
+	bool "Logging support"
+
+config LOG_MULTI_CPU_SUPPORT
+	bool "Multi-CPU log support"
+	depends on LOG
+	help
+	When this option is active, logs will be routed using IPC from slaves CPUs
+	to a single master CPU.
+
+choice
+	prompt "Master/Slave"
+	depends on LOG_MULTI_CPU_SUPPORT
+	default LOG_SLAVE if QUARK_SE_NORDIC
+
+config LOG_MASTER
+	bool "Master"
+	help
+	Master receives log messages from all slaves CPUs.
+
+config LOG_SLAVE
+	bool "Slave"
+	help
+	Slave send log messages to master.
+
+endchoice
+
+
+choice
+	prompt "Message logging implementation"
+	depends on LOG
+
+config LOG_PRINTK
+	bool "Simple printk log implementation"
+	depends on LOG_MASTER || !LOG_MULTI_CPU_SUPPORT
+	help
+	A simple log implementation using an externally provided printk function.
+
+config LOG_PRINTF
+	bool "Simple printf log implementation"
+	depends on LOG_MASTER || !LOG_MULTI_CPU_SUPPORT
+	help
+	A simple log implementation using an externally provided printf function.
+
+config LOG_CBUFFER
+	bool "Circular Buffer Log implementation"
+	help
+	A log implementation using a circular log buffer and a dedicated
+	low-priority log task doing the actual flush.
+
+config LOG_LOCAL
+	bool "Local implementation of message logging"
+	help
+	The project implements its own message logging function.
+
+endchoice
+
+config LOG_CBUFFER_SIZE
+	int "Circular Log Buffer Size (bytes)"
+	default 1024
+	depends on LOG_CBUFFER
+	help
+	The size of the Circular Log Buffer (in bytes)
+
+config CBUFFER_STORAGE
+	bool "Circular Buffer Storage"
+	help
+	A generic circular buffer module to store fixed or variable element size.
+
+config FACTORY_DATA
+	bool "Add support for factory data insertion"
+
+config VERSION
+	bool "Binary version header"
+	select LOG
+	default y
+
+config LOG_BACKEND_USB
+	bool "Log over USB"
+	depends on LOG
+	depends on USB_ACM
+	help
+	When enabled logging is over USB, when disabled logging is over UART.
+
+
+
+endmenu

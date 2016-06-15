@@ -1,0 +1,39 @@
+menu "USB"
+
+config USB
+	bool
+
+config HAS_USB
+	bool
+
+config USB_SHARED_INTERFACE
+	bool
+	depends on QUARK_SE && HAS_USB
+
+config USB_PRODUCT_ID
+	hex "USB Product ID"
+	default 0x0a99
+	depends on USB
+
+config USB_VENDOR_ID
+	hex "USB Vendor ID"
+	default 0x8087
+	depends on USB
+
+choice
+	prompt "USB Function driver"
+	optional
+	depends on HAS_USB
+
+config USB_ACM
+	bool "ACM"
+	select USB
+	select WORKQUEUE
+
+endchoice
+
+config ACM_DUAL
+	bool "Dual mode"
+	depends on USB_ACM
+
+endmenu
