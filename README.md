@@ -51,7 +51,7 @@ Please clone the set of git repositories by using `repo` tool from Google.
 http://source.android.com/source/downloading.html#installing-repo
 
     $ mkdir CODK-A && cd $_
-    $ repo init -u git@github.com:01org/CODK-A-Manifest.git
+    $ repo init -u git@github.com:01org/CODK-A-Manifest.git -b refs/tags/v1
     $ repo sync -j 5
     $ project_directory=$(pwd)/arduino101_firmware/projects/arduino101/
 
