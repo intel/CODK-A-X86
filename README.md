@@ -1,7 +1,8 @@
-                           Arduino 101 Firmware Update
+                               Arduino 101 Firmware
 
 Table of Contents
 
+    0. END OF DEVELOPMENT
     1. INTRODUCTION
     2. DOWNLOADING THE SOURCE CODE
     3. INSTALLING ALL PREREQUISITE PACKAGES
@@ -10,6 +11,14 @@ Table of Contents
     6. FLASHING IMAGES TO THE BOARD
         6.1 Windows
         6.2 Linux / Mac
+------------------------------------------------------------------------------
+0. END OF DEVELOPMENT
+------------------------------------------------------------------------------
+This source tree has reached end of new development. New firmware development 
+work for the Arduino 101™ and Genuino 101™ with Intel® Curie™ will continue on
+a new source code tree, CODK-M, based on the Zephyr™ RTOS to better align with
+our platform. 
+
 ------------------------------------------------------------------------------
 1. INTRODUCTION
 ------------------------------------------------------------------------------
