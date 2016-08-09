@@ -29,7 +29,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-KCONFIG_SRC = $(T)/arduino101_firmware/external/kconfig
+KCONFIG_SRC = $(T)/firmware/external/kconfig
 KCONFIG_DIR = $(T)/out/host_tools/kconfig
 KCONFIG_CONF = $(KCONFIG_DIR)/frontends/conf/conf
 KCONFIG_MCONF = $(KCONFIG_DIR)/frontends/mconf/mconf

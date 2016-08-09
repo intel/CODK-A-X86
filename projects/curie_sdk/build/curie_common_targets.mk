@@ -32,7 +32,7 @@
 THIS_DIR    := $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
 T           := $(abspath $(THIS_DIR)/../../../..)
 OUT         := $(T)/out/current
-ZEPHYR_BASE := $(T)/arduino101_firmware/external/zephyr
+ZEPHYR_BASE := $(T)/firmware/external/zephyr
 PROJECT_PATH ?= $(CURDIR)
 
 REF_BUILD_INFO ?= "pub/reference_build_info.json"
@@ -46,10 +46,10 @@ $(OUT)/firmware:
 	$(AT)mkdir -p $@
 
 # Bootloader defconfig
-BOOTLOADER_ROOT ?= $(T)/arduino101_firmware/bsp/bootable/bootloader
+BOOTLOADER_ROOT ?= $(T)/firmware/bsp/bootable/bootloader
 BOOTLOADER_DEFCONFIG ?= $(BOOTLOADER_ROOT)/board/intel/configs/$(BOARD)_defconfig
 
-include $(T)/arduino101_firmware/build/common_targets.mk
+include $(T)/firmware/build/common_targets.mk
 
 _project_help:
 
@@ -67,11 +67,11 @@ _project_setup:
 	$(AT)$(MAKE) quark_defconfig DEFCONFIG=$(QUARK_DEFCONFIG)
 	$(AT)$(MAKE) arc_defconfig DEFCONFIG=$(ARC_DEFCONFIG)
 	$(AT)$(MAKE) bootupdater_defconfig \
-		DEFCONFIG=$(T)/arduino101_firmware/projects/curie_sdk/bootupdater/defconfig_$(BOARD) \
-		PROJECT_PATH=$(T)/arduino101_firmware/bsp/bootable/bootupdater/
+		DEFCONFIG=$(T)/firmware/projects/curie_sdk/bootupdater/defconfig_$(BOARD) \
+		PROJECT_PATH=$(T)/firmware/bsp/bootable/bootupdater/
 	$(AT)$(MAKE) cos_defconfig \
-		DEFCONFIG=$(T)/arduino101_firmware/projects/curie_sdk/cos/defconfig_$(BOARD) \
-		PROJECT_PATH=$(T)/arduino101_firmware/bsp/bootable/cos/
+		DEFCONFIG=$(T)/firmware/projects/curie_sdk/cos/defconfig_$(BOARD) \
+		PROJECT_PATH=$(T)/firmware/bsp/bootable/cos/
 
 # FIXME: main core binaries shall go to $(OUT)/firmware/main_core
 image: _check_setup_was_done $(OUT)/firmware/bootupdater.bin bootloader $(OUT)/firmware/quark.bin $(OUT)/firmware/arc.bin $(OUT)/firmware/FSRom.bin $(OUT)/firmware/quark.0.bin $(OUT)/firmware/quark.1.bin
@@ -79,7 +79,7 @@ image: _check_setup_was_done $(OUT)/firmware/bootupdater.bin bootloader $(OUT)/f
 $(OUT)/firmware/FSRom.bin: _check_setup_was_done | $(OUT)/firmware
 	@echo "\n"$(ANSI_CYAN)"Building FSRom"$(ANSI_OFF)
 	$(AT)mkdir -p $(OUT)/bootstrap/quark
-	$(AT)$(MAKE) -f $(T)/arduino101_firmware/bsp/bootable/bootstrap/quark/Makefile \
+	$(AT)$(MAKE) -f $(T)/firmware/bsp/bootable/bootstrap/quark/Makefile \
 		-C $(OUT)/bootstrap/quark/ T=$(T) -j 1
 	$(AT)cp $(OUT)/bootstrap/quark/FSRom.bin $(OUT)/firmware/FSRom.bin
 	@echo $(ANSI_CYAN)"Done FSRom"$(ANSI_OFF)
@@ -90,7 +90,7 @@ $(OUT)/firmware/quark.elf: _check_setup_was_done .force
 	$(AT)mkdir -p $(OUT)/quark_se/quark/zephyr
 	$(AT)/bin/bash -c "export T=$(T); \
 		source $(ZEPHYR_BASE)/zephyr-env.sh; \
-		$(MAKE) -C $(T)/arduino101_firmware/projects/curie_sdk/quark_main \
+		$(MAKE) -C $(T)/firmware/projects/curie_sdk/quark_main \
 			BUILDVARIANT=$(BUILDVARIANT)"
 # Copy the result to $(OUT)/firmware/quark.elf
 	$(AT)if [ `cat $(OUT)/BUILDVARIANT.txt` = unittests_nano ]; then \
@@ -104,13 +104,13 @@ $(OUT)/firmware/arc.elf: _check_setup_was_done .force
 	$(AT)/bin/bash -c "export T=$(T); \
 		export OUT=$(OUT); \
 		source $(ZEPHYR_BASE)/zephyr-env.sh; \
-		$(MAKE) -C $(T)/arduino101_firmware/projects/curie_sdk/arc_main \
+		$(MAKE) -C $(T)/firmware/projects/curie_sdk/arc_main \
 			BUILDVARIANT=$(BUILDVARIANT)"
 	$(AT)cp $(OUT)/quark_se/arc/zephyr/nanokernel.elf $(OUT)/firmware/arc.elf
 
 $(OUT)/firmware/arc.bin: $(OUT)/firmware/arc.elf
 	$(AT)cp $(OUT)/quark_se/arc/zephyr/nanokernel.bin $@
-	$(AT)$(T)/arduino101_firmware/tools/scripts/build_utils/add_binary_version_header.py \
+	$(AT)$(T)/firmware/tools/scripts/build_utils/add_binary_version_header.py \
 		--major $(VERSION_MAJOR) \
 		--minor $(VERSION_MINOR) \
 		--patch $(VERSION_PATCH) \
@@ -132,8 +132,8 @@ $(OUT)/firmware/quark.1.bin: $(OUT)/firmware/quark.padded.bin
 	$(AT)dd if=$< of=$@ bs=1 skip=131072 $(SILENT_DD)
 
 $(OUT)/firmware/quark.bin: $(OUT)/firmware/quark.elf
-	$(AT)$(T)/arduino101_firmware/external/gcc-i586-pc-elf/bin/i586-pc-elf-objcopy -O binary $(OUT)/firmware/quark.elf $@
-	$(AT)$(T)/arduino101_firmware/tools/scripts/build_utils/add_binary_version_header.py \
+	$(AT)$(T)/firmware/external/gcc-i586-pc-elf/bin/i586-pc-elf-objcopy -O binary $(OUT)/firmware/quark.elf $@
+	$(AT)$(T)/firmware/tools/scripts/build_utils/add_binary_version_header.py \
 		--major $(VERSION_MAJOR) \
 		--minor $(VERSION_MINOR) \
 		--patch $(VERSION_PATCH) \
@@ -141,12 +141,12 @@ $(OUT)/firmware/quark.bin: $(OUT)/firmware/quark.elf
 	@echo $(ANSI_CYAN)"Done Quark"$(ANSI_OFF)
 
 $(OUT)/firmware/FSRam.bin: $(OUT)/firmware/arc.bin $(OUT)/firmware/quark.bin
-	$(AT)$(T)/arduino101_firmware/projects/curie_sdk/build/scripts/Create384KImage.py \
+	$(AT)$(T)/firmware/projects/curie_sdk/build/scripts/Create384KImage.py \
 		-I $(OUT)/firmware/quark.bin -S $(OUT)/firmware/arc.bin -O $(OUT)/firmware/FSRam.bin
 
 $(OUT)/quark_se/quark/bootloader/bootloader.bin: _check_setup_was_done $(OUT)/quark_se/cos/cos.c | $(OUT)/firmware
 	@echo "\n"$(ANSI_CYAN)"Building Bootloader"$(ANSI_OFF)
-	$(AT)$(MAKE) -f $(T)/arduino101_firmware/bsp/bootable/bootloader/Makefile T=$(T) \
+	$(AT)$(MAKE) -f $(T)/firmware/bsp/bootable/bootloader/Makefile T=$(T) \
 		BOOTLOADER_ROOT=$(BOOTLOADER_ROOT) \
 		BOOTLOADER_DEFCONFIG=$(BOOTLOADER_DEFCONFIG) \
 		OUT=$(OUT)/quark_se/quark/bootloader \
@@ -162,14 +162,14 @@ bootloader: $(OUT)/quark_se/quark/bootloader/bootloader.bin
 
 $(OUT)/quark_se/bootupdater/bootupdater.bin: _check_setup_was_done $(OUT)/quark_se/
 	@echo "\n"$(ANSI_CYAN)"Building Bootupdater"$(ANSI_OFF)
-	$(AT)$(MAKE) -C $(T)/arduino101_firmware/bsp/bootable/bootupdater/ image \
+	$(AT)$(MAKE) -C $(T)/firmware/bsp/bootable/bootupdater/ image \
 		T=$(T) \
 		OUT=$(OUT)/quark_se/bootupdater \
 		VERSION_MAJOR=$(VERSION_MAJOR) \
 		VERSION_MINOR=$(VERSION_MINOR) \
 		VERSION_PATCH=$(VERSION_PATCH) \
 		VERSION_STRING_SUFFIX=$(VERSION_STRING_SUFFIX) \
-		PROJECT_PATH=$(T)/arduino101_firmware/bsp/bootable/bootupdater/ \
+		PROJECT_PATH=$(T)/firmware/bsp/bootable/bootupdater/ \
 		BOARD=$(BOARD)
 
 $(OUT)/firmware/bootupdater.bin: $(OUT)/quark_se/bootupdater/bootupdater.bin $(OUT)/firmware
@@ -179,10 +179,10 @@ bootupdater: $(OUT)/firmware/bootupdater.bin
 
 $(OUT)/quark_se/cos/cos.bin: _check_setup_was_done $(OUT)/quark_se/
 	@echo "\n"$(ANSI_CYAN)"Building COS"$(ANSI_OFF)
-	$(AT)$(MAKE) -C $(T)/arduino101_firmware/bsp/bootable/cos/ image \
+	$(AT)$(MAKE) -C $(T)/firmware/bsp/bootable/cos/ image \
 		T=$(T) \
 		OUT=$(OUT)/quark_se/cos \
-		PROJECT_PATH=$(T)/arduino101_firmware/bsp/bootable/cos/ \
+		PROJECT_PATH=$(T)/firmware/bsp/bootable/cos/ \
 		BOARD=$(BOARD)
 
 $(OUT)/quark_se/cos/cos.c: $(OUT)/quark_se/cos/cos.bin
@@ -195,36 +195,36 @@ $(OUT)/firmware/cos.bin: $(OUT)/quark_se/cos/cos.bin
 cos: $(OUT)/firmware/cos.bin $(OUT)/quark_se/cos/cos.c
 
 # Flags used to pre processor mapping headers for linker script
-EXTRA_LINKERSCRIPT_CMD_OPT = -I$(T)/arduino101_firmware/bsp/bootable/bootloader/include
+EXTRA_LINKERSCRIPT_CMD_OPT = -I$(T)/firmware/bsp/bootable/bootloader/include
 
 pub/build_report: | pub
 	$(AT)mkdir -p $(T)/pub/build_report
 
 build_info: image | pub pub/build_report
-	$(AT)$(T)/arduino101_firmware/external/gcc-i586-pc-elf/bin/i586-pc-elf-readelf -e $(OUT)/firmware/quark.elf \
+	$(AT)$(T)/firmware/external/gcc-i586-pc-elf/bin/i586-pc-elf-readelf -e $(OUT)/firmware/quark.elf \
 		> $(OUT)/firmware/quark.stat
-	$(AT)$(T)/arduino101_firmware/external/gcc-arc-elf32/bin/arc-elf32-readelf -e $(OUT)/firmware/arc.elf \
+	$(AT)$(T)/firmware/external/gcc-arc-elf32/bin/arc-elf32-readelf -e $(OUT)/firmware/arc.elf \
 		> $(OUT)/firmware/arc.stat
-	$(AT)$(T)/arduino101_firmware/external/gcc-i586-pc-elf/bin/i586-pc-elf-readelf -e $(OUT)/firmware/bootloader_quark.elf \
+	$(AT)$(T)/firmware/external/gcc-i586-pc-elf/bin/i586-pc-elf-readelf -e $(OUT)/firmware/bootloader_quark.elf \
 		> $(OUT)/firmware/bootloader_quark.stat
-	$(AT)PYTHONPATH="$(PYTHONPATH):$(T)/arduino101_firmware/projects/curie_sdk/build/scripts/" \
-		python $(T)/arduino101_firmware/tools/scripts/build_utils/generate_build_info.py \
+	$(AT)PYTHONPATH="$(PYTHONPATH):$(T)/firmware/projects/curie_sdk/build/scripts/" \
+		python $(T)/firmware/tools/scripts/build_utils/generate_build_info.py \
 			$(OUT) $(T)/pub/build_info-$(BUILD_TAG).json \
 			> $(OUT)/build_info.json
 	$(AT)cat $(OUT)/build_info.json
-	$(AT)python $(T)/arduino101_firmware/tools/scripts/build_utils/generate_memory_report.py \
-		$(OUT)/firmware/quark.elf $(OUT)/firmware/quark.bin $(T)/arduino101_firmware/ $(OUT)/ \
+	$(AT)python $(T)/firmware/tools/scripts/build_utils/generate_memory_report.py \
+		$(OUT)/firmware/quark.elf $(OUT)/firmware/quark.bin $(T)/firmware/ $(OUT)/ \
 		> $(T)/pub/build_report/$(PROJECT)-$(BOARD)-$(BUILDVARIANT)_quark_footprint_report-$(BUILD_TAG).html
-	$(AT)python $(T)/arduino101_firmware/tools/scripts/build_utils/generate_memory_report.py \
-		$(OUT)/firmware/arc.elf $(OUT)/firmware/arc.bin $(T)/arduino101_firmware/ $(OUT)/ \
+	$(AT)python $(T)/firmware/tools/scripts/build_utils/generate_memory_report.py \
+		$(OUT)/firmware/arc.elf $(OUT)/firmware/arc.bin $(T)/firmware/ $(OUT)/ \
 		> $(T)/pub/build_report/$(PROJECT)-$(BOARD)-$(BUILDVARIANT)_arc_footprint_report-$(BUILD_TAG).html
-	$(AT)python $(T)/arduino101_firmware/tools/scripts/build_utils/generate_memory_report.py \
-		$(OUT)/firmware/bootloader_quark.elf $(OUT)/firmware/bootloader_quark.bin $(T)/arduino101_firmware/ $(OUT)/ \
+	$(AT)python $(T)/firmware/tools/scripts/build_utils/generate_memory_report.py \
+		$(OUT)/firmware/bootloader_quark.elf $(OUT)/firmware/bootloader_quark.bin $(T)/firmware/ $(OUT)/ \
 		> $(T)/pub/build_report/$(PROJECT)-$(BOARD)-$(BUILDVARIANT)_bootloader_footprint_report-$(BUILD_TAG).html
 
 %_defconfig:
-	$(AT)$(MAKE) -f $(T)/arduino101_firmware/build/config.mk defconfig \
+	$(AT)$(MAKE) -f $(T)/firmware/build/config.mk defconfig \
 		T=$(T) \
 		OUT=$(OUT)/quark_se/$*/ \
-		KCONFIG_ROOT=$(T)/arduino101_firmware/Kconfig
+		KCONFIG_ROOT=$(T)/firmware/Kconfig
 

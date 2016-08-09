@@ -31,10 +31,10 @@
 
 T ?= $(CURDIR)
 OUT := $(T)/out/current/quark_se/bootupdater
-TOOLS_PATH ?= $(T)/arduino101_firmware/tools
+TOOLS_PATH ?= $(T)/firmware/tools
 BINARY_VERSION_HEADER ?= $(TOOLS_PATH)/scripts/build_utils/add_binary_version_header.py
-BOOTUPDATER_LDS ?= $(T)/arduino101_firmware/bsp/bootable/bootupdater/quark.lds
-QUARK_SE_DEVICE_DIR := $(T)/arduino101_firmware/devices/quark_se
+BOOTUPDATER_LDS ?= $(T)/firmware/bsp/bootable/bootupdater/quark.lds
+QUARK_SE_DEVICE_DIR := $(T)/firmware/devices/quark_se
 
 ifeq ($(filter ctb crb morpheus arduino101, $(BOARD)),)
 $(error The bootloader updater can only run on the Curie Test/Reference Board, \
@@ -55,7 +55,7 @@ $(error "VERSION_STRING_SUFFIX not defined")
 endif
 
 ARCH=x86
-include $(T)/arduino101_firmware/build/Makefile.toolchain
+include $(T)/firmware/build/Makefile.toolchain
 
 KCONFIG_FILE ?= $(OUT)/.config
 include $(KCONFIG_FILE)
@@ -65,8 +65,8 @@ CFLAGS += -DNDEBUG=1
 endif
 
 CFLAGS += -g
-CFLAGS += -I$(T)/arduino101_firmware/bsp/include
-CFLAGS += -I$(T)/arduino101_firmware/bsp/bootable/bootupdater/include
+CFLAGS += -I$(T)/firmware/bsp/include
+CFLAGS += -I$(T)/firmware/bsp/bootable/bootupdater/include
 CFLAGS += -D__CPU_QRK__
 CFLAGS += -nostartfiles
 CFLAGS += -ffreestanding -nostartfiles -fno-exceptions
@@ -89,7 +89,7 @@ $(OUT)/bootupdater.elf: $(OUT)/bootupdater.lds $(OUT)/kbuild/built-in.a
 $(OUT)/bootupdater.bin: $(OUT)/bootupdater.elf
 	@echo $(ANSI_RED)"[bX]"$(ANSI_OFF) $(@:$(T)/%=%)
 	$(AT)$(OBJCOPY) -O binary $< $@
-	$(AT)$(T)/arduino101_firmware/tools/scripts/build_utils/add_binary_version_header.py \
+	$(AT)$(T)/firmware/tools/scripts/build_utils/add_binary_version_header.py \
 		--major $(VERSION_MAJOR) \
 		--minor $(VERSION_MINOR) \
 		--patch $(VERSION_PATCH) \
@@ -104,4 +104,4 @@ image: bootupdater
 all: image
 
 # This included file defines base targets like doc or $(OUT)/built-in.a
-include $(T)/arduino101_firmware/build/base.mk
+include $(T)/firmware/build/base.mk

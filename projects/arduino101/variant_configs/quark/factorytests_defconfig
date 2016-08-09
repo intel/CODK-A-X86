@@ -1,6 +1,6 @@
 CONFIG_OS_ZEPHYR = y
 CONFIG_OS_ZEPHYR_MDEF = minimal.mdef
-CONFIG_EXTERNAL_DIRECTORIES = $(T)/arduino101_firmware/devices/quark_se_arduino101/src/
+CONFIG_EXTERNAL_DIRECTORIES = $(T)/firmware/devices/quark_se_arduino101/src/
 CONFIG_QUARK_SE = y
 CONFIG_QUARK = y
 CONFIG_CFW_MASTER = y

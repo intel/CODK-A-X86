@@ -53,7 +53,7 @@ http://source.android.com/source/downloading.html#installing-repo
     $ mkdir CODK-A && cd $_
     $ repo init -u git@github.com:01org/CODK-A-Manifest.git
     $ repo sync -j 5
-    $ project_directory=$(pwd)/arduino101_firmware/projects/arduino101/
+    $ project_directory=$(pwd)/firmware/projects/arduino101/
 
 ------------------------------------------------------------------------------
 3. INSTALLING ALL PREREQUISITE PACKAGES

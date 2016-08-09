@@ -41,10 +41,10 @@ EXTRA_CFLAGS += -DNDEBUG=1
 endif
 
 EXTRA_CFLAGS += -g
-EXTRA_CFLAGS += -I$(T)/arduino101_firmware/framework/include
-EXTRA_CFLAGS += -I$(T)/arduino101_firmware/bsp/include
+EXTRA_CFLAGS += -I$(T)/firmware/framework/include
+EXTRA_CFLAGS += -I$(T)/firmware/bsp/include
 # TODO remove this one
-EXTRA_CFLAGS += -I$(T)/arduino101_firmware/bsp/include/machine/soc/quark_se/
+EXTRA_CFLAGS += -I$(T)/firmware/bsp/include/machine/soc/quark_se/
 
 EXTRA_CFLAGS += -D_UNSUPPORTED_STD_LIBS
 EXTRA_CFLAGS += -nostdlib -nostartfiles -nostdinc
@@ -64,26 +64,26 @@ EXTRA_CFLAGS += -DCONFIG_UART_INTERRUPT_DRIVEN
 EXTRA_CFLAGS += -D__CPU_QRK__
 
 # ble support, additional include paths.
-EXTRA_CFLAGS += -I$(T)/arduino101_firmware/framework/src/services/ble
-EXTRA_CFLAGS += -I$(T)/arduino101_firmware/framework/include/services
+EXTRA_CFLAGS += -I$(T)/firmware/framework/src/services/ble
+EXTRA_CFLAGS += -I$(T)/firmware/framework/include/services
 
 # Fixme: zephyr doesn't support passing empty PRJ_SRC
-SOURCE_DIR =  $(T)/arduino101_firmware/projects/curie_sdk/quark_main/dummy
+SOURCE_DIR =  $(T)/firmware/projects/curie_sdk/quark_main/dummy
 
 ifndef CONFIG_OS_UNIT_TESTS
 
 EXTRA_CFLAGS += -Werror
 
 ifdef CONFIG_QUARK_DRIVER_TESTS
-EXTRA_CFLAGS += -I$(T)/arduino101_firmware/framework/unit_test
+EXTRA_CFLAGS += -I$(T)/firmware/framework/unit_test
 EXTRA_CFLAGS += -DDRIVER_TESTS -DSERVICE_TESTS
 endif
 
 else # CONFIG_OS_UNIT_TESTS
 
 EXTRA_CFLAGS += -DTARGET_QRK
-EXTRA_BUILD_CFLAGS += -I$(T)/arduino101_firmware/framework/unit_test/os
-EXTRA_BUILD_CFLAGS += -I$(T)/arduino101_firmware/framework/include/zephyr
+EXTRA_BUILD_CFLAGS += -I$(T)/firmware/framework/unit_test/os
+EXTRA_BUILD_CFLAGS += -I$(T)/firmware/framework/include/zephyr
 
 endif
 
@@ -95,7 +95,7 @@ export T
 export OUT
 
 #######################
-include $(T)/arduino101_firmware/build/Makefile.toolchain
+include $(T)/firmware/build/Makefile.toolchain
 OUTPUT_DIR=$(OUT)/zephyr
 export OUTPUT_DIR
 O=$(OUTPUT_DIR)
@@ -125,8 +125,8 @@ EXTRA_CFLAGS += -I$(OUT)/zephyr/misc/generated/sysgen/
 EXTRA_CFLAGS += -include $(OUT)/zephyr/include/generated/autoconf.h
 # Flags used to preprocessor mapping headers for linker script
 EXTRA_LINKER_CMD_OPT +=-D CONFIG_QUARK_SE_ARC_RAM_SIZE=$(CONFIG_QUARK_SE_ARC_RAM_SIZE)
-EXTRA_LINKER_CMD_OPT +=-I$(T)/arduino101_firmware/bsp/include/machine/soc/quark_se
-EXTRA_LINKER_CMD_OPT +=-I$(T)/arduino101_firmware/bsp/include/machine/soc/quark_se/quark\
+EXTRA_LINKER_CMD_OPT +=-I$(T)/firmware/bsp/include/machine/soc/quark_se
+EXTRA_LINKER_CMD_OPT +=-I$(T)/firmware/bsp/include/machine/soc/quark_se/quark\
 
 EXTRA_CFLAGS += -DOS_VXMICRO
 endif
@@ -137,4 +137,4 @@ export T
 
 .PHONY: FORCE
 export USE_CCACHE=0
-include $(T)/arduino101_firmware/external/zephyr/Makefile.inc
+include $(T)/firmware/external/zephyr/Makefile.inc

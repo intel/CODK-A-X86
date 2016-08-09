@@ -52,7 +52,7 @@ BUILD_TAG       ?= custom_build_$(USER)@$(HOSTNAME)$(NOWDATE)
 # Host framework tests
 # FIXME: should go in its own project
 
-include $(T)/arduino101_firmware/build/verbosity.mk
+include $(T)/firmware/build/verbosity.mk
 
 # Continuous integration targets
 
@@ -64,5 +64,5 @@ clean:
 REF_BUILD_INFO ?= "pub/reference_build_info.json"
 build_report:
 	@if [ ! -e $(T)/pub/build_info-$(BUILD_TAG).json ]; then echo "No build info file found for build tag: $(BUILD_TAG). Make sure you use a consistent BUILD_TAG value while building and creating build report." ; exit 1 ; fi
-	@python $(T)/arduino101_firmware/tools/scripts/build_utils/generate_build_report.py $(T)/pub/build_info-$(BUILD_TAG).json --input_ref_json $(REF_BUILD_INFO) > $(T)/pub/build_report-$(BUILD_TAG).html
+	@python $(T)/firmware/tools/scripts/build_utils/generate_build_report.py $(T)/pub/build_info-$(BUILD_TAG).json --input_ref_json $(REF_BUILD_INFO) > $(T)/pub/build_report-$(BUILD_TAG).html
 	@echo Build report created in pub/build_report-$(BUILD_TAG).html

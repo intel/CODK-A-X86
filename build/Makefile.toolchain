@@ -2,17 +2,17 @@
 # x86
 CROSS_COMPILE_TARGET_x86 = i586-pc-elf
 CROSS_COMPILE_x86_version = 4.8.0
-CROSS_COMPILE_x86=${T}/arduino101_firmware/external/gcc-i586-pc-elf/bin/$(CROSS_COMPILE_TARGET_x86)-
+CROSS_COMPILE_x86=${T}/firmware/external/gcc-i586-pc-elf/bin/$(CROSS_COMPILE_TARGET_x86)-
 
 # external/gcc-i586-pc-elf/lib/gcc/i586-pc-elf/4.8.0/
-LIB_INCLUDE_DIR_x86 = -L ${T}/arduino101_firmware/external/gcc-i586-pc-elf/lib/gcc/${CROSS_COMPILE_TARGET_x86}/${CROSS_COMPILE_x86_version}/
+LIB_INCLUDE_DIR_x86 = -L ${T}/firmware/external/gcc-i586-pc-elf/lib/gcc/${CROSS_COMPILE_TARGET_x86}/${CROSS_COMPILE_x86_version}/
 
 # arc
 CROSS_COMPILE_TARGET_arc = arc-elf32
 CROSS_COMPILE_arc_version = 4.8.0
-CROSS_COMPILE_arc=${T}/arduino101_firmware/external/gcc-arc-elf32/bin/${CROSS_COMPILE_TARGET_arc}-
+CROSS_COMPILE_arc=${T}/firmware/external/gcc-arc-elf32/bin/${CROSS_COMPILE_TARGET_arc}-
 
-LIB_INCLUDE_DIR_arc = -L ${T}/arduino101_firmware/external/gcc-arc-elf32/lib/gcc/arc-elf32/4.8.0/em/
+LIB_INCLUDE_DIR_arc = -L ${T}/firmware/external/gcc-arc-elf32/lib/gcc/arc-elf32/4.8.0/em/
 
 
 CROSS_COMPILE = $(CROSS_COMPILE_$(ARCH))

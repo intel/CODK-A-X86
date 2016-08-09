@@ -13,4 +13,4 @@ $(OUTPUT_DIR)/kapp/libkbuildout.a: $(OUT)/kbuild/built-in.a
 	$(AT)$(AR) -rcT $@ $<
 
 # This included file defines base targets like doc or $(OUT)/built-in.a
-include $(T)/arduino101_firmware/build/base.mk
+include $(T)/firmware/build/base.mk

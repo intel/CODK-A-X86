@@ -82,7 +82,7 @@ export PROJECT_PATH
 endif
 
 # The top-level directory (the one containing the build/ directory where this file is)
-TDOME_ROOT      ?= $(T)/arduino101_firmware
+TDOME_ROOT      ?= $(T)/firmware
 
 #### Versioning, setup and build info
 # Use a default build tag when none is set by the caller

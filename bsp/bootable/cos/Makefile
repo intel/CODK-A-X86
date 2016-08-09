@@ -1,8 +1,8 @@
 T ?= $(CURDIR)
 OUT := $(T)/out/current/quark_se/cos
-TOOLS_PATH ?= $(T)/arduino101_firmware/tools
-COS_LDS ?= $(T)/arduino101_firmware/bsp/bootable/cos/arc.lds
-QUARK_SE_DEVICE_DIR := $(T)/arduino101_firmware/devices/quark_se
+TOOLS_PATH ?= $(T)/firmware/tools
+COS_LDS ?= $(T)/firmware/bsp/bootable/cos/arc.lds
+QUARK_SE_DEVICE_DIR := $(T)/firmware/devices/quark_se
 
 ifeq ($(filter ctb crb morpheus arduino101, $(BOARD)),)
 $(error The Charging OS can only run on the Curie Test/Reference Board, \
@@ -10,7 +10,7 @@ $(error The Charging OS can only run on the Curie Test/Reference Board, \
 endif
 
 ARCH=arc
-include $(T)/arduino101_firmware/build/Makefile.toolchain
+include $(T)/firmware/build/Makefile.toolchain
 
 KCONFIG_FILE ?= $(OUT)/.config
 include $(KCONFIG_FILE)
@@ -20,8 +20,8 @@ CFLAGS += -DNDEBUG=1
 endif
 
 CFLAGS += -g
-CFLAGS += -I$(T)/arduino101_firmware/bsp/include
-CFLAGS += -I$(T)/arduino101_firmware/bsp/bootable/cos/include
+CFLAGS += -I$(T)/firmware/bsp/include
+CFLAGS += -I$(T)/firmware/bsp/bootable/cos/include
 CFLAGS += -D__CPU_ARC__
 CFLAGS += -nostartfiles
 CFLAGS += -ffreestanding -nostartfiles -fno-exceptions
@@ -58,4 +58,4 @@ image: cos
 all: image
 
 # This included file defines base targets like doc or $(OUT)/built-in.a
-include $(T)/arduino101_firmware/build/base.mk
+include $(T)/firmware/build/base.mk

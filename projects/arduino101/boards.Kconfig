@@ -14,7 +14,7 @@ if BOARD_ARDUINO101
 # We use the same machine headers as the Curie Test Board
 config MACHINE_INCLUDE_PATH
 	string
-	default     "$(T)/arduino101_firmware/bsp/include/machine/board/quark_se_ctb/$(CONFIG_CORE_NAME)/"
+	default     "$(T)/firmware/bsp/include/machine/board/quark_se_ctb/$(CONFIG_CORE_NAME)/"
 
 # Override the USB Product ID
 config USB_PRODUCT_ID

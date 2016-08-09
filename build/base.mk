@@ -54,7 +54,7 @@ $(KCONFIG_HEADER): $(KCONFIG_FILE)
 	# Kconfig uses #define CONFIG_XX 1 instead of CONFIG_XX y for booleans
 	$(AT)sed -i $@ -e 's/ y$$/ 1/'
 
-# Provide rules to build the arduino101_firmware "thin" static library built-in.a
+# Provide rules to build the firmware "thin" static library built-in.a
 # (actually an aggregated list of links to actual object files)
 
 # The framework library (built-in.a) is built based on:
@@ -63,7 +63,7 @@ $(KCONFIG_HEADER): $(KCONFIG_FILE)
 # - the current CFLAGS and EXTRA_BUILD_CFLAGS
 $(KBUILD_OUT_DIR)/built-in.a: $(KCONFIG_HEADER) _generated_sources FORCE
 	@echo "Creating framework archive:" $(OUT:$(T)/%=%)
-	$(AT)$(MAKE) -C $(T)/arduino101_firmware -f $(T)/arduino101_firmware/build/Makefile.build \
+	$(AT)$(MAKE) -C $(T)/firmware -f $(T)/firmware/build/Makefile.build \
 		SRC=. \
 		OUT=$(KBUILD_OUT_DIR) \
 		KCONFIG=$(KCONFIG_FILE) \
@@ -75,7 +75,7 @@ $(KBUILD_OUT_DIR)/built-in.a: $(KCONFIG_HEADER) _generated_sources FORCE
 
 _generated_sources:
 	@echo "Generating source files"
-	$(AT)$(MAKE) -C $(T)/arduino101_firmware -f $(T)/arduino101_firmware/build/Makefile.source \
+	$(AT)$(MAKE) -C $(T)/firmware -f $(T)/firmware/build/Makefile.source \
 		SRC=. \
 		OUT=$(KBUILD_OUT_DIR) \
 		KCONFIG=$(KCONFIG_FILE) \

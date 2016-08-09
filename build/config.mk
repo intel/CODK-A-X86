@@ -52,7 +52,7 @@ $(error No Kconfig root file specified)
 endif
 
 # include rules to build kconfig-frontends host tools
-include $(T)/arduino101_firmware/build/host/kconfig.mk
+include $(T)/firmware/build/host/kconfig.mk
 
 # Kconfig conf output files
 KCONFIG_CONFIG=$(OUT)/.config
@@ -71,17 +71,17 @@ KCONFIG_ENV := \
 # Generate configuration headers from .config file
 config: $(KCONFIG_CONFIG) $(KCONFIG_CONF)
 	@echo "Checking and expanding build configuration"
-	$(AT)(cd $(T)/arduino101_firmware && \
+	$(AT)(cd $(T)/firmware && \
 	$(KCONFIG_ENV) $(KCONFIG_CONF) --silentoldconfig $(KCONFIG_ROOT))
 
 # Interactively select configuration items to generate .config file
 menuconfig: $(KCONFIG_MCONF)
-	(cd $(T)/arduino101_firmware && \
+	(cd $(T)/firmware && \
 	$(KCONFIG_ENV) $(KCONFIG_MCONF) $(KCONFIG_ROOT))
 
 # Save a configuration to the specified DEFCONFIG
 savedefconfig: $(KCONFIG_CONF)
-	$(AT)(cd $(T)/arduino101_firmware && \
+	$(AT)(cd $(T)/firmware && \
 	$(KCONFIG_ENV) $(KCONFIG_CONF) \
 	--savedefconfig=$(if $(DEFCONFIG),$(DEFCONFIG),$(OUT)/defconfig) \
 	$(KCONFIG_ROOT))
@@ -89,7 +89,7 @@ savedefconfig: $(KCONFIG_CONF)
 # Load a configuration from the specified DEFCONFIG
 defconfig: $(KCONFIG_CONF)
 	$(if $(DEFCONFIG),,@echo "Error: DEFCONFIG must be set"; false)
-	$(AT)(cd $(T)/arduino101_firmware && \
+	$(AT)(cd $(T)/firmware && \
 	$(KCONFIG_ENV) $(KCONFIG_CONF) \
 	--defconfig$(if $(DEFCONFIG),=$(DEFCONFIG)) $(KCONFIG_ROOT))
 

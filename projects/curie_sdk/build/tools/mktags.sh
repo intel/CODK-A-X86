@@ -37,7 +37,7 @@ ctags -R \
     --exclude=bootloader \
     --exclude=manifest \
     --exclude=out \
-    --exclude=arduino101_firmware/doc \
-    --exclude=arduino101_firmware/tools \
+    --exclude=firmware/doc \
+    --exclude=firmware/tools \
     --exclude=samples
 

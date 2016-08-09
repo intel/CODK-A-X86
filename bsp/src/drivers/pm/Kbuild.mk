@@ -3,7 +3,7 @@ obj-y += device.o
 ifeq ($(CONFIG_PM_PUPDR),y)
 obj-y += pm_pupdr_common.o
 ifeq ($(CONFIG_QUARK_SE_QUARK),y)
-subdir-cflags-y += -I$(T)/arduino101_firmware/bsp/bootable/bootloader/include/usb/
+subdir-cflags-y += -I$(T)/firmware/bsp/bootable/bootloader/include/usb/
 obj-y += pm_pupdr.o
 obj-$(CONFIG_TCMD) += pm_pupdr_tcmd.o
 endif

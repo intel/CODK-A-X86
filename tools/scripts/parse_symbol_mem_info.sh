@@ -14,16 +14,16 @@ else
 	echo "      [level]: used for 'high level' file info, this is the max depth for folder"
 	echo "               possible value is [0...MaxDepth], 0 mean no high level file"
 	echo "    Need to be started on main folder"
-	echo "    Ex: ./arduino101_firmware/tools/scripts/parse_symbol_mem_info.sh ./out/quark_se_reference_ctb_release/firmware/quark.elf mem_quark.csv 0"
+	echo "    Ex: ./firmware/tools/scripts/parse_symbol_mem_info.sh ./out/quark_se_reference_ctb_release/firmware/quark.elf mem_quark.csv 0"
 	exit 1
 fi
 
-basepath=$(pwd)/arduino101_firmware/tools/scripts
+basepath=$(pwd)/firmware/tools/scripts
 
 if [ -f $basepath ]
 then
 	echo "Error, please start this script in main folder"
-        echo "Ex: ./arduino101_firmware/tools/scripts/parse_symbol_mem_info.sh ./out/quark_se_reference_ctb_release/firmware/quark.elf mem_quark.csv 0"
+        echo "Ex: ./firmware/tools/scripts/parse_symbol_mem_info.sh ./out/quark_se_reference_ctb_release/firmware/quark.elf mem_quark.csv 0"
 	exit 1
 fi
 
@@ -41,7 +41,7 @@ then
 fi
 
 
-basepath=$(pwd)/arduino101_firmware/tools/scripts
+basepath=$(pwd)/firmware/tools/scripts
 
 if [ -f $basepath/symbol_footprint.sh ]
 then

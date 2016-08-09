@@ -40,7 +40,7 @@
  * Defines the communication interface between the Master and the Slaves.
  *
  * The Component Framework (CFW) is the main building block in the
- * [Arduino101_Firmware](@ref arduino101_firmware_reference_doc) SDK.
+ * [Arduino101_Firmware](@ref firmware_reference_doc) SDK.
  *
  * - Node: a node is an instantiation of the component framework. It corresponds
  *         to a CPU of the hardware platform.

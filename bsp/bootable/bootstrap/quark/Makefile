@@ -41,7 +41,7 @@ BREAK_BEFORE_OS?=0
 # Tools
 ########################################
 
-CROSS_PATH?=$(T)/arduino101_firmware/external/gcc-i586-pc-elf/bin
+CROSS_PATH?=$(T)/firmware/external/gcc-i586-pc-elf/bin
 CROSS?=i586-pc-elf-
 
 TOOL_PREFIX=$(CROSS_PATH)/$(CROSS)

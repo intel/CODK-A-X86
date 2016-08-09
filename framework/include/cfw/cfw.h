@@ -42,7 +42,7 @@
 
 /**
  * @defgroup cfw Component Framework
- * The Component Framework is the main building block in the arduino101_firmware
+ * The Component Framework is the main building block in the firmware
  * platform.
  *
  */
