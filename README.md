@@ -1,7 +1,4 @@
                                Arduino 101 Firmware
-```c
-CuriePME.begin()
-```
 Table of Contents
 
     0. END OF DEVELOPMENT
